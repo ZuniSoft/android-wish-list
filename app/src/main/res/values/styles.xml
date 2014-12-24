@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <style name="Wishlist" parent="@style/Theme.AppCompat.Light">
+        <item name="actionBarItemBackground">@drawable/selectable_background_wishlist</item>
+        <item name="popupMenuStyle">@style/PopupMenu.Wishlist</item>
+        <item name="dropDownListViewStyle">@style/DropDownListView.Wishlist</item>
+        <item name="actionBarTabStyle">@style/ActionBarTabStyle.Wishlist</item>
+        <item name="actionDropDownStyle">@style/DropDownNav.Wishlist</item>
+        <item name="actionBarStyle">@style/ActionBar.Solid.Wishlist</item>
+        <item name="actionModeBackground">@drawable/cab_background_top_wishlist</item>
+        <item name="actionModeSplitBackground">@drawable/cab_background_bottom_wishlist</item>
+        <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Wishlist</item>
+    </style>
+
+    <style name="ActionBar.Solid.Wishlist" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="background">@drawable/ab_solid_wishlist</item>
+        <item name="backgroundStacked">@drawable/ab_stacked_solid_wishlist</item>
+        <item name="backgroundSplit">@drawable/ab_bottom_solid_wishlist</item>
+        <item name="progressBarStyle">@style/ProgressBar.Wishlist</item>
+    </style>
+
+    <style name="ActionBar.Transparent.Wishlist" parent="@style/Widget.AppCompat.Light.ActionBar">
+        <item name="background">@drawable/ab_transparent_wishlist</item>
+        <item name="progressBarStyle">@style/ProgressBar.Wishlist</item>
+    </style>
+	
+    <style name="PopupMenu.Wishlist" parent="@style/Widget.AppCompat.Light.PopupMenu">	
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_wishlist</item>	
+    </style>
+	
+    <style name="DropDownListView.Wishlist" parent="@style/Widget.AppCompat.Light.ListView.DropDown">
+        <item name="android:listSelector">@drawable/selectable_background_wishlist</item>
+    </style>
+
+    <style name="ActionBarTabStyle.Wishlist" parent="@style/Widget.AppCompat.Light.ActionBar.TabView">
+        <item name="android:background">@drawable/tab_indicator_ab_wishlist</item>
+    </style>
+	
+    <style name="DropDownNav.Wishlist" parent="@style/Widget.AppCompat.Light.Spinner.DropDown.ActionBar">
+        <item name="android:background">@drawable/spinner_background_ab_wishlist</item>
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_wishlist</item>
+        <item name="android:dropDownSelector">@drawable/selectable_background_wishlist</item>
+    </style>
+    
+    <style name="ProgressBar.Wishlist" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_wishlist</item>
+    </style>
+    
+    <style name="ActionButton.CloseMode.Wishlist" parent="@style/Widget.AppCompat.Light.ActionButton.CloseMode">
+        <item name="android:background">@drawable/btn_cab_done_wishlist</item>
+    </style>
+    
+    <!-- This style is only referenced in a Light.DarkActionBar based theme -->
+    <style name="Theme.Wishlist.Widget" parent="@style/Theme.AppCompat">
+        <item name="popupMenuStyle">@style/PopupMenu.Wishlist</item>
+        <item name="dropDownListViewStyle">@style/DropDownListView.Wishlist</item>
+    </style>
+
+    <!-- Buttonbar and button styles -->
+    <style name="ButtonBarButton" parent="@style/Theme.AppCompat">
+        <item name="android:background">@drawable/theme_bar_button</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="ButtonBar" parent="@drawable/theme_button_bar">
+    </style>
+</resources>

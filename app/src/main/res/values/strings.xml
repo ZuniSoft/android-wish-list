@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <!-- Application name -->
+    <string name="app_name">Wish List</string>
+
+    <!-- Menus -->
+    <string name="about_label">About</string>
+    <string name="about_shortcut">a</string>
+
+    <string name="add_new_label">Add New Item</string>
+    <string name="add_new_shortcut">n</string>
+
+    <string name="delete_label">Delete Item</string>
+    <string name="delete_shortcut">d</string>
+
+    <!-- Empty string -->
+    <string name="empty_string"></string>
+
+    <!-- And/Or string -->
+    <string name="and_or_string">and/or</string>
+
+    <!-- Comma separator -->
+    <string name="comma_string">, </string>
+
+    <!-- Date formats -->
+    <string name="date_display_format">yyyy-MM-dd</string>
+    <string name="date_display_long_format">EEEE, MMMM d, yyyy</string>
+    <string name="date_storage_format">yyyy-MM-dd</string>
+
+    <!-- Validation hints -->
+    <string name="validation_required_field">Required field</string>
+    <string name="validation_date">Invalid date format, use yyyy-mm-dd </string>
+    <string name="validation_value_out_of_range">Value out of range</string>
+
+    <!-- Common buttons -->
+    <string name="add_button_label">Add</string>
+    <string name="continue_button_label">Continue</string>
+    <string name="cancel_button_label">Cancel</string>
+    <string name="delete_button_label">Delete</string>
+    <string name="no_button_label">No</string>
+    <string name="ok_button_label">OK</string>
+    <string name="save_button_label">Save</string>
+    <string name="yes_button_label">Yes</string>
+
+    <!-- Common dialogs -->
+    <string name="progress_dlg_generic_title">Please Wait</string>
+    <string name="progress_dlg_generic_msg">Working...</string>
+
+    <!-- ItemListFragment -->
+    <string name="item_list_title">Items</string>
+    <string name="item_list_empty_msg">You don\'t have any items in your wish list!</string>
+    <string name="item_list_empty_detail_msg">To add items, press the + to add a new item.</string>
+    <string name="item_list_row_location_label">Location: </string>
+    <string name="item_list_row_category_label">Category: </string>
+    <string name="item_list_row_date_label">Date: </string>
+
+    <!-- ExternalStorageStatusFragment -->
+    <string name="external_storage_status_title">Wish List Configuration</string>
+    <string name="external_storage_status_default_msg">Warning: External Storage Error!</string>
+    <string name="external_storage_status_default_detail_msg">The application has encountered an unknown error with your device\'s external storage. Please check your storage card and restart the application.</string>
+    <string name="external_storage_status_read_only_msg">Warning: External Storage is Read Only!</string>
+    <string name="external_storage_status_read_only_detail_msg">This application requires writable external storage. Please make your storage card writable and restart the application.</string>
+    <string name="external_storage_status_shared_msg">Warning: External Storage is Busy!</string>
+    <string name="external_storage_status_shared_detail_msg">Your external storage is not accessible. This is possibly due to your storage being shared via USB mass storage. Please disconnect your device and restart the application.</string>
+    <string name="external_storage_status_unmounted_msg">Warning: No External Storage Found!</string>
+    <string name="external_storage_status_unmounted_detail_msg">This application requires external storage. Please insert a storage card into your device and restart the application.</string>
+
+    <!-- AboutFragment -->
+    <string name="about_title">About Wish List</string>
+    <string name="about_text">A consumer wish list for Android</string>
+    <string name="about_code_copyright">Copyright © 2015 ZuniSoft</string>
+    <string name="about_url_label">Visit:</string>
+    <string name="about_url">www.zunisoft.com</string>
+    <string name="about_license">Wish List is free software.  ZuniSoft accepts no responsibility from damage to yourself or your computer that may arise from the installation of this software.  In general terms that means you use them at your own risk, and we accept no responsibility for anything that may occur as a result of your use of, or inability to use, the item provided.</string>
+
+    <!-- Item fragment -->
+    <string name="item_edit_description_label">Description</string>
+    <string name="item_edit_location_label">Location</string>
+    <string name="item_edit_date_captured_label">Date Added</string>
+    <string name="item_edit_date_purchased_label">Date Purchased</string>
+    <string name="item_edit_category_label">Category</string>
+    <string name="item_edit_desirability_label">Desirability</string>
+    <string name="item_edit_barcode_label">Barcode/ISBN</string>
+    <string name="item_edit_notes_label">Notes</string>
+</resources>

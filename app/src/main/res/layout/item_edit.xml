@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_edit"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1">
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:isScrollContainer="true"
+            android:scrollbars="vertical"
+            android:padding="20dip"
+            android:gravity="top">
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical">
+                <ImageButton
+                    android:id="@+id/item_edit_camera_button"
+                    android:layout_width="256dip"
+                    android:layout_height="256dip"
+                    android:scaleType="centerInside"
+                    android:background="@drawable/ic_camera"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="30sp"
+                    android:text="@string/and_or_string"
+                    android:layout_gravity="center" />
+                <ImageButton
+                    android:id="@+id/item_edit_barcode_button"
+                    android:layout_width="256dip"
+                    android:layout_height="256dip"
+                    android:scaleType="centerInside"
+                    android:background="@drawable/ic_barcode"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/item_edit_description_label" />
+                <EditText
+                    android:id="@+id/item_edit_description"
+                    android:inputType="textMultiLine"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/item_edit_location_label" />
+                <EditText
+                    android:id="@+id/item_edit_location"
+                    android:singleLine="true"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/item_edit_date_captured_label" />
+                <EditText
+                    android:id="@+id/item_edit_date_captured"
+                    android:singleLine="true"
+                    android:focusable="false"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" />
+                <RelativeLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/item_edit_date_purchased_label" />
+                    <EditText
+                        android:id="@+id/item_edit_date_purchased"
+                        android:inputType="textCapWords"
+                        android:singleLine="true"
+                        android:focusable="false"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dip" />
+                    <ImageButton
+                        android:layout_alignParentRight="true"
+                        android:id="@+id/item_edit_date_purchased_button"
+                        android:layout_width="48dip"
+                        android:layout_height="48dip"
+                        android:scaleType="centerInside"
+                        android:background="@drawable/ic_action_go_to_today"/>
+                </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/item_edit_category_label" />
+                <EditText
+                    android:id="@+id/item_edit_category"
+                    android:singleLine="true"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/item_edit_barcode_label" />
+                <EditText
+                    android:id="@+id/item_edit_barcode"
+                    android:singleLine="true"
+                    android:focusable="false"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/item_edit_notes_label" />
+                <EditText
+                    android:id="@+id/item_edit_notes"
+                    android:inputType="textMultiLine"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/item_edit_desirability_label" />
+                <RatingBar
+                    android:id="@+id/item_edit_desirability"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:numStars="5"
+                    android:stepSize="1"
+                    android:layout_weight="1" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+    <TableLayout
+        style="@android:style/ButtonBar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="6dip"
+        android:paddingRight="5dip"
+        android:paddingBottom="5dip"
+        android:layout_weight="0">
+        <TableRow
+            android:gravity="right">
+            <Button
+                style="@style/ButtonBarButton"
+                android:id="@+id/item_edit_cancel_button"
+                android:layout_height="fill_parent"
+                android:layout_width="100dip"
+                android:layout_marginRight="5dip"
+                android:text="@string/cancel_button_label" />
+            <Button
+                style="@style/ButtonBarButton"
+                android:id="@+id/item_edit_save_button"
+                android:layout_height="fill_parent"
+                android:layout_width="100dip"
+                android:text="@string/save_button_label" />
+        </TableRow>
+    </TableLayout>
+</LinearLayout>
