@@ -20,8 +20,8 @@ package com.zunisoft.wishlist.fragment;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -35,10 +35,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.SearchView.OnQueryTextListener;
 
 import com.zunisoft.common.concurrent.TaskListener;
 import com.zunisoft.common.db.DatabaseAdapter;
 import com.zunisoft.wishlist.R;
+import com.zunisoft.wishlist.MainActivity;
 import com.zunisoft.wishlist.adapter.ItemListAdapter;
 import com.zunisoft.wishlist.model.Item;
 
@@ -131,7 +134,7 @@ public class ItemListFragment extends Fragment implements TaskListener {
         View rootView = inflater.inflate(R.layout.item_list, container, false);
 
         ItemListTask task = new ItemListTask(this);
-        task.execute(cursor);
+        task.execute("");
 
         return rootView;
     }
@@ -173,6 +176,47 @@ public class ItemListFragment extends Fragment implements TaskListener {
         Log.d(TAG, "onCreateOptionsMenu");
 
         inflater.inflate(R.menu.menu_item_list, menu);
+
+        final Fragment fg = this;
+
+        MenuItem item = menu.findItem(R.id.menu_item_search);
+        final SearchView sv = new SearchView(((MainActivity) getActivity()).getSupportActionBar().getThemedContext());
+        MenuItemCompat.setActionView(item, sv);
+
+        sv.setOnQueryTextListener(new OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.d(TAG, "onQueryTextSubmit()");
+
+                // Trying to prevent double firing of this event
+                sv.clearFocus();
+
+                ItemListTask task = new ItemListTask((TaskListener) fg);
+                task.execute(query);
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Log.d(TAG, "onQueryTextChange()");
+                return false;
+            }
+        });
+
+        sv.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                Log.d(TAG, "onClose()");
+
+                sv.setQuery("", false);
+
+                ItemListTask task = new ItemListTask((TaskListener) fg);
+                task.execute("");
+
+                return false;
+            }
+        });
     }
 
     /**
@@ -253,7 +297,7 @@ public class ItemListFragment extends Fragment implements TaskListener {
     }
 
     // Item list task
-    private class ItemListTask extends AsyncTask<Cursor, Void, Cursor> {
+    private class ItemListTask extends AsyncTask<String, Void, Cursor> {
         private final TaskListener listener;
 
         public ItemListTask(TaskListener listener) {
@@ -266,7 +310,9 @@ public class ItemListFragment extends Fragment implements TaskListener {
         }
 
         @Override
-        protected Cursor doInBackground(final Cursor... args) {
+        protected Cursor doInBackground(final String... args) {
+
+            String query = args[0];
 
             DatabaseAdapter db;
             Item item;
@@ -277,7 +323,7 @@ public class ItemListFragment extends Fragment implements TaskListener {
             item = new Item(getActivity().getApplicationContext().getResources());
             item.setSQLiteDatabase(db.getDatabase());
 
-            cursor = item.findAll();
+            cursor = item.findAllByListFields(query, true);
 
             return cursor;
         }

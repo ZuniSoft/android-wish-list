@@ -35,7 +35,9 @@ import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 
 /**
  * Item model.
@@ -89,7 +91,7 @@ public class Item extends ActiveRecord {
     /** Minimum select list */
     public static final String[] MIN_SELECT_LIST = { COL_ROW_ID,
             COL_PHOTO_THUMBNAIL, COL_DESCRIPTION, COL_LOCATION, COL_DATE_CAPTURED,
-            COL_DATE_PURCHASED, COL_DESIRABILITY};
+            COL_DATE_PURCHASED, COL_CATEGORY, COL_DESIRABILITY};
 
     /** Default sort order */
     public static final String DEFAULT_SORT_ORDER = COL_DESCRIPTION + " ASC";
@@ -108,8 +110,11 @@ public class Item extends ActiveRecord {
     private String  notes;
 
     // Member variables
-    private String datePattern;
-    private DateFormat dateFormat;
+    private String dateDisplayPattern;
+    private DateFormat dateDisplayFormat;
+    private String dateStoragePattern;
+    private DateFormat dateStorageFormat;
+
 
     /**
      * Constructs a new <tt>Item</tt> object.
@@ -122,8 +127,11 @@ public class Item extends ActiveRecord {
         Log.d(TAG, "Item()");
 
         // Set the date format objects
-        datePattern = res.getString(R.string.date_storage_format);
-        dateFormat = new SimpleDateFormat(datePattern);
+        dateDisplayPattern = res.getString(R.string.date_display_format);
+        dateDisplayFormat = new SimpleDateFormat(dateDisplayPattern);
+
+        dateStoragePattern = res.getString(R.string.date_storage_format);
+        dateStorageFormat = new SimpleDateFormat(dateStoragePattern);
     }
 
     /**
@@ -140,7 +148,7 @@ public class Item extends ActiveRecord {
     }
 
     /**
-     * Finds all records matching the specified description.
+     * Finds all records matching data in any item list view fields.
      *
      * @param searchText
      *            The item text to search on.
@@ -151,8 +159,8 @@ public class Item extends ActiveRecord {
      * @return Result set of the records that were found to match the specified
      *         criteria.
      */
-    public Cursor findAllByNameAndCategory(String searchText, boolean minimumFields) {
-        Log.d(TAG, "findAllByName()");
+    public Cursor findAllByListFields(String searchText, boolean minimumFields) {
+        Log.d(TAG, "findAllByListFields()");
 
         String selection;
         String fields[];
@@ -171,8 +179,41 @@ public class Item extends ActiveRecord {
 
             // Build selection expression
             String likeExpr = " LIKE '" + searchText + "%'";
-            selection = COL_DESCRIPTION + likeExpr + " OR " + COL_CATEGORY
-                    + likeExpr;
+            String dateExpr = "";
+
+            // Check the search string for dates
+            String[] tokens = searchText.split(" ");
+            ArrayList<Date> dates = new ArrayList<Date>();
+
+            // Get any valid dates
+            for(int i = 0; i < tokens.length; i++) {
+                try {
+                    Date date = dateDisplayFormat.parse(tokens[i]);
+                    dates.add(date);
+                } catch (ParseException e) {
+                    Log.d(TAG, "Error parsing date!");
+                }
+            }
+
+            // Format any dates for storage search
+            Iterator<Date> it = dates.iterator();
+            while(it.hasNext())
+            {
+                dateExpr = dateExpr + COL_DATE_CAPTURED + " = '" + dateStorageFormat.format(it.next()) + "'";
+
+                if (it.hasNext())
+                    dateExpr = dateExpr + " OR ";
+            }
+
+            // Build the WHERE clause
+            selection = COL_DESCRIPTION + likeExpr
+                    + " OR " + COL_CATEGORY + likeExpr
+                    + " OR " + COL_LOCATION + likeExpr
+                    + " OR " + COL_DESIRABILITY + likeExpr;
+
+            if (!dateExpr.isEmpty())
+                selection = selection + " OR " + dateExpr;
+
             Log.d(TAG, "Search filter = " + selection);
         }
 
@@ -207,7 +248,7 @@ public class Item extends ActiveRecord {
 
                 // Set the date of capture
                 try {
-                    setCaptureDate(dateFormat.parse(cursor.getString(cursor
+                    setCaptureDate(dateStorageFormat.parse(cursor.getString(cursor
                             .getColumnIndex(COL_DATE_CAPTURED))));
                 } catch (ParseException e) {
                     Log.e(TAG, "Parsing date of capture failed", e);
@@ -217,7 +258,7 @@ public class Item extends ActiveRecord {
                 try {
                     if (cursor.getString(cursor
                             .getColumnIndex(COL_DATE_PURCHASED)) != null)
-                        setPurchasedDate(dateFormat.parse(cursor.getString(cursor
+                        setPurchasedDate(dateStorageFormat.parse(cursor.getString(cursor
                             .getColumnIndex(COL_DATE_PURCHASED))));
                 } catch (ParseException e) {
                     Log.e(TAG, "Parsing date of purchase failed", e);
@@ -286,10 +327,10 @@ public class Item extends ActiveRecord {
             // Set the fields
             values.put(COL_DESCRIPTION, description);
             values.put(COL_LOCATION, location);
-            values.put(COL_DATE_CAPTURED, DateUtils.formatDate(dateCaptured, datePattern));
+            values.put(COL_DATE_CAPTURED, DateUtils.formatDate(dateCaptured, dateStoragePattern));
 
             if (datePurchased != null)
-                values.put(COL_DATE_PURCHASED, DateUtils.formatDate(datePurchased, datePattern));
+                values.put(COL_DATE_PURCHASED, DateUtils.formatDate(datePurchased, dateStoragePattern));
 
             values.put(COL_CATEGORY, category);
             values.put(COL_DESIRABILITY, desirability);

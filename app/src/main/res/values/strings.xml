@@ -15,6 +15,9 @@
     <string name="delete_label">Delete Item</string>
     <string name="delete_shortcut">d</string>
 
+    <string name="search_label">Search</string>
+    <string name="search_shortcut">s</string>
+
     <!-- Empty string -->
     <string name="empty_string"></string>
 
@@ -25,7 +28,7 @@
     <string name="comma_string">, </string>
 
     <!-- Date formats -->
-    <string name="date_display_format">yyyy-MM-dd</string>
+    <string name="date_display_format">MM/dd/yyyy</string>
     <string name="date_display_long_format">EEEE, MMMM d, yyyy</string>
     <string name="date_storage_format">yyyy-MM-dd</string>
 
@@ -51,7 +54,7 @@
     <!-- ItemListFragment -->
     <string name="item_list_title">Items</string>
     <string name="item_list_empty_msg">You don\'t have any items in your wish list!</string>
-    <string name="item_list_empty_detail_msg">To add items, press the + to add a new item.</string>
+    <string name="item_list_empty_detail_msg">To add items, press the + to add a new item or check your search filter.</string>
     <string name="item_list_row_location_label">Location: </string>
     <string name="item_list_row_category_label">Category: </string>
     <string name="item_list_row_date_label">Date: </string>
@@ -72,7 +75,7 @@
     <string name="about_text">A consumer wish list for Android</string>
     <string name="about_code_copyright">Copyright © 2015 ZuniSoft</string>
     <string name="about_url_label">Visit:</string>
-    <string name="about_url">www.zunisoft.com</string>
+    <string name="about_url">wishlist.zunisoft.com</string>
     <string name="about_license">Wish List is free software.  ZuniSoft accepts no responsibility from damage to yourself or your computer that may arise from the installation of this software.  In general terms that means you use them at your own risk, and we accept no responsibility for anything that may occur as a result of your use of, or inability to use, the item provided.</string>
 
     <!-- Item fragment -->

@@ -4,9 +4,9 @@
     package="com.zunisoft.wishlist"
     android:installLocation="auto"
     android:versionCode="1"
-    android:versionName="1.0.1">
+    android:versionName="1.0.2">
 
-    <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="21"/>
+    <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="21"/>
     <supports-screens android:smallScreens="false" android:normalScreens="true" android:largeScreens="true" android:xlargeScreens="true" android:anyDensity="true"/>
 
     <application
