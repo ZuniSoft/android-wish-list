@@ -61,6 +61,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp" />
+                <TextView
+                    android:id="@+id/about_barcode"
+                    android:text="@string/about_outpan"
+                    android:textSize="13.0sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp" />
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"

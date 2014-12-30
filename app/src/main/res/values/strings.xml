@@ -81,6 +81,7 @@
     <string name="about_url_label">Visit:</string>
     <string name="about_url">wishlist.zunisoft.com</string>
     <string name="about_license">Wish List is free software.  ZuniSoft accepts no responsibility from damage to yourself or your computer that may arise from the installation of this software.  In general terms that means you use them at your own risk, and we accept no responsibility for anything that may occur as a result of your use of, or inability to use, the item provided.</string>
+    <string name="about_outpan">Barcode database by <a href="http://www.outpan.com">Outpan</a> is licensed under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</string>
 
     <!-- Item fragment -->
     <string name="item_edit_description_label">Description</string>

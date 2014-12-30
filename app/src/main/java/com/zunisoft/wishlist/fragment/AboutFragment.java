@@ -25,6 +25,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.text.method.LinkMovementMethod;
 
 import com.zunisoft.common.support.AndroidUtil;
 import com.zunisoft.wishlist.R;
@@ -77,7 +78,11 @@ public class AboutFragment extends Fragment implements View.OnClickListener {
 		// Set the application version
 		TextView text = (TextView) rootView.findViewById(R.id.app_version);
 		text.setText(AndroidUtil.getPackageVersion(getActivity()));
-		
+
+        // Barcode database attribution links
+        text = (TextView) rootView.findViewById(R.id.about_barcode);
+        text.setMovementMethod(LinkMovementMethod.getInstance());
+
 		// Set the "OK" button
 		View okButton = rootView.findViewById(R.id.about_ok_button);
 		okButton.setOnClickListener(this);
