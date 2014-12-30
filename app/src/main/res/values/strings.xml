@@ -47,6 +47,10 @@
     <string name="save_button_label">Save</string>
     <string name="yes_button_label">Yes</string>
 
+    <!-- Toast strings -->
+    <string name="toast_no_scan_data">No scan data returned!</string>
+    <string name="toast_gps_disabled">Location services are disabled!</string>
+
     <!-- Common dialogs -->
     <string name="progress_dlg_generic_title">Please Wait</string>
     <string name="progress_dlg_generic_msg">Working...</string>

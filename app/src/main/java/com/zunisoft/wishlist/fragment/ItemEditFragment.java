@@ -29,12 +29,16 @@ import java.util.Iterator;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.location.Criteria;
+import android.location.LocationManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -196,6 +200,10 @@ public class ItemEditFragment extends Fragment implements View.OnClickListener, 
         // Set the "Scan" button
         View scanButton = rootView.findViewById(R.id.item_edit_barcode_button);
         scanButton.setOnClickListener(this);
+
+        // Set the "Location" button
+        View locationButton = rootView.findViewById(R.id.item_edit_map_button);
+        locationButton.setOnClickListener(this);
 
         // Set the "Cancel" button
         View cancelButton = rootView.findViewById(R.id.item_edit_cancel_button);
@@ -380,6 +388,9 @@ public class ItemEditFragment extends Fragment implements View.OnClickListener, 
                 IntentIntegrator scanIntegrator = new IntentIntegrator(getActivity());
                 scanIntegrator.initiateScan();
                 break;
+            case R.id.item_edit_map_button:
+                startLocationSearch();
+                break;
             case R.id.item_edit_date_purchased_button:
                 DatePickerDialogFragment picker = new DatePickerDialogFragment();
                 picker.show(getFragmentManager(), "datePicker");
@@ -439,7 +450,7 @@ public class ItemEditFragment extends Fragment implements View.OnClickListener, 
                 task.execute(scanContent);
             } else {
                 Toast toast = Toast.makeText(getActivity().getApplicationContext(),
-                        "No scan data received!", Toast.LENGTH_SHORT);
+                        getResources().getString(R.string.toast_no_scan_data), Toast.LENGTH_LONG);
                 toast.show();
             }
         }
@@ -523,6 +534,45 @@ public class ItemEditFragment extends Fragment implements View.OnClickListener, 
             // Set the hint
             tv = (TextView) getActivity().findViewById(viewId);
             tv.setError(hint);
+        }
+    }
+
+    /**
+     * Starts the Google maps location search.
+     */
+    protected void startLocationSearch() {
+        Log.d(TAG, "startLocationSearch()");
+
+        // Set the location manager
+        LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+
+        // Get a location provider
+        Criteria criteria = new Criteria();
+        criteria.setAccuracy(Criteria.ACCURACY_COARSE);
+        criteria.setAltitudeRequired(false);
+        criteria.setBearingRequired(false);
+        criteria.setCostAllowed(true);
+        criteria.setPowerRequirement(Criteria.POWER_LOW);
+
+        String bp = locationManager.getBestProvider(criteria, true);
+
+        if (bp == null) {
+            Toast toast = Toast.makeText(getActivity().getApplicationContext(),
+                    getResources().getString(R.string.toast_gps_disabled), Toast.LENGTH_LONG);
+            toast.show();
+        } else {
+            // Get the search criteria
+
+            String searchCriteria = editLocation.getText().toString();
+
+            // Replace whitespace with plus (+) for map intent URI
+            searchCriteria = searchCriteria.replaceAll("\\s", "+");
+
+            // Start Google maps
+            String uri = "geo:0,0?q="
+                    + searchCriteria;
+            startActivity(new Intent(android.content.Intent.ACTION_VIEW, Uri
+                    .parse(uri)));
         }
     }
 

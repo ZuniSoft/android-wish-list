@@ -83,3 +83,11 @@ uses-permission#android.permission.KILL_BACKGROUND_PROCESSES
 ADDED from AndroidManifest.xml:30:5
 	android:name
 		ADDED from AndroidManifest.xml:30:22
+uses-permission#android.permission.ACCESS_FINE_LOCATION
+ADDED from AndroidManifest.xml:31:5
+	android:name
+		ADDED from AndroidManifest.xml:31:22
+uses-permission#android.permission.ACCESS_COARSE_LOCATION
+ADDED from AndroidManifest.xml:32:5
+	android:name
+		ADDED from AndroidManifest.xml:32:22
