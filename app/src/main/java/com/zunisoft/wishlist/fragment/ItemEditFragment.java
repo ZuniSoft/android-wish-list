@@ -411,15 +411,18 @@ public class ItemEditFragment extends Fragment implements View.OnClickListener, 
                         + System.getProperty("line.separator")
                         + editDescription.getText().toString();
 
+                if (editNotes.getText().toString().trim().compareToIgnoreCase("") != 0) {
+                    content = content
+                    + System.getProperty("line.separator")
+                    + System.getProperty("line.separator")
+                    + editNotes.getText().toString();
+                }
+
                 content = content
                         + System.getProperty("line.separator")
                         + System.getProperty("line.separator")
-                        + editLocation.getText().toString()
-                        + System.getProperty("line.separator")
-                        + System.getProperty("line.separator");
-
-                if (editNotes.getText().toString().trim().compareToIgnoreCase("") != 0)
-                    content = content + editNotes.getText().toString();
+                        + getResources().getString(R.string.item_edit_location_label) + ": "
+                        + editLocation.getText().toString();
 
                 shareIntent.putExtra(Intent.EXTRA_TEXT, content);
                 shareIntent.setType("text/plain");
