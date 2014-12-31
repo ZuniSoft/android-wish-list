@@ -18,7 +18,11 @@
 
 package com.zunisoft.wishlist.fragment;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,6 +36,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.Canvas;
@@ -43,6 +48,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.ShareActionProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -65,6 +72,7 @@ import com.google.zxing.integration.android.IntentResult;
 import com.zunisoft.common.concurrent.TaskListener;
 import com.zunisoft.common.db.DatabaseAdapter;
 import com.zunisoft.common.db.RecordNotFoundException;
+import com.zunisoft.common.support.AndroidUtil;
 import com.zunisoft.common.support.DatePickerDialogFragment;
 import com.zunisoft.common.support.JSONFunctions;
 import com.zunisoft.wishlist.model.Item;
@@ -108,6 +116,9 @@ public class ItemEditFragment extends Fragment implements View.OnClickListener, 
 
     // Database adapter
     private DatabaseAdapter dbAdapter;
+
+    // Social sharing provider
+    private ShareActionProvider shareActionProvider;
 
     // Member variables
     private Bitmap imageLarge;
@@ -341,8 +352,85 @@ public class ItemEditFragment extends Fragment implements View.OnClickListener, 
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         Log.d(TAG, "onCreateOptionsMenu");
 
-        if (isEditMode)
-            inflater.inflate(R.menu.menu_item_edit, menu);
+        inflater.inflate(R.menu.menu_item_edit, menu);
+
+        MenuItem itemDelete = menu.findItem(R.id.action_delete);
+        MenuItem itemShare = menu.findItem(R.id.action_share);
+
+        // Check if we are in edit mode
+        if (isEditMode) {
+            itemDelete.setVisible(true);
+            itemShare.setVisible(true);
+
+            // Setup share intent
+            shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(itemShare);
+
+            if (shareActionProvider != null) {
+                Intent shareIntent = new Intent();
+                shareIntent.setAction(Intent.ACTION_SEND);
+
+                // Get the item's photo
+                String tempPath = AndroidUtil.getTempDir(
+                        getActivity().getApplicationContext());
+                File tmpPhoto = null;
+
+                try {
+                    tmpPhoto = File.createTempFile("photo", ".jpg",
+                            new File(tempPath));
+                } catch (IOException e) {
+                    Log.e(TAG, "Error creating temporary photo file");
+                }
+
+                FileOutputStream fOut = null;
+                try {
+                    fOut = new FileOutputStream(tmpPhoto.getPath());
+                } catch (FileNotFoundException e) {
+                    Log.e(TAG, "Error opening file stream");
+                }
+
+                imageLarge.compress(Bitmap.CompressFormat.JPEG, 90, fOut);
+
+                try {
+                    fOut.flush();
+                    fOut.close();
+                } catch (IOException e) {
+                    Log.e(TAG, "Error writing photo to SD card");
+                }
+
+                // Attach photo
+                shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://"
+                        + tmpPhoto.getPath()));
+                shareIntent.setType("image/png");
+
+
+                // Default content string
+                String content = getResources().getString(R.string.item_edit_share_content);
+
+                content = content
+                        + System.getProperty("line.separator")
+                        + System.getProperty("line.separator")
+                        + editDescription.getText().toString();
+
+                content = content
+                        + System.getProperty("line.separator")
+                        + System.getProperty("line.separator")
+                        + editLocation.getText().toString()
+                        + System.getProperty("line.separator")
+                        + System.getProperty("line.separator");
+
+                if (editNotes.getText().toString().trim().compareToIgnoreCase("") != 0)
+                    content = content + editNotes.getText().toString();
+
+                shareIntent.putExtra(Intent.EXTRA_TEXT, content);
+                shareIntent.setType("text/plain");
+
+                shareActionProvider.setShareIntent(shareIntent);
+
+            }
+        } else {
+            itemDelete.setVisible(false);
+            itemShare.setVisible(false);
+        }
     }
 
     /**
