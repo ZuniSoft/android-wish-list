@@ -185,6 +185,15 @@ public class ItemListAdapter extends SimpleCursorAdapter {
 
         rb.setRating((float)rate);
 
+        // Purchased image
+        if ((cursor.getString(this.cursor.getColumnIndex(Item.COL_DATE_PURCHASED)) != null)) {
+            ImageView purchasedView = (ImageView) view
+                    .findViewById(R.id.item_list_row_purchased);
+
+            purchasedView.setBackgroundResource(R.drawable.ic_purchased);
+            purchasedView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        }
+
         super.bindView(view, context, cursor);
     }
 

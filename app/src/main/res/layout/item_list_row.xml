@@ -105,4 +105,9 @@
                 style="?android:attr/ratingBarStyleSmall" />
         </LinearLayout>
     </LinearLayout>
+    <ImageView
+        android:id="@+id/item_list_row_purchased"
+        android:layout_width="96dip"
+        android:layout_height="95dip"
+        android:scaleType="fitCenter" />
 </LinearLayout>

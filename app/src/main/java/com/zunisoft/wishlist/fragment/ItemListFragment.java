@@ -336,9 +336,11 @@ public class ItemListFragment extends Fragment implements TaskListener {
                 showEmptyListMsg(false);
 
                 String[] from = new String[] { Item.COL_DESCRIPTION, Item.COL_LOCATION,
-                    Item.COL_CATEGORY, Item.COL_DATE_CAPTURED, Item.COL_DESIRABILITY };
+                    Item.COL_CATEGORY, Item.COL_DATE_CAPTURED, Item.COL_DESIRABILITY,
+                    Item.COL_DATE_PURCHASED };
                 int[] to = new int[] { R.id.item_list_row_description, R.id.item_list_row_location,
-                    R.id.item_edit_category, R.id.item_edit_date_captured, R.id.item_edit_desirability};
+                    R.id.item_edit_category, R.id.item_edit_date_captured, R.id.item_edit_desirability,
+                    R.id.item_list_row_purchased};
 
                 adapter = new ItemListAdapter(getActivity().getApplicationContext(),
                         R.layout.item_list_row, cursor, from, to);
