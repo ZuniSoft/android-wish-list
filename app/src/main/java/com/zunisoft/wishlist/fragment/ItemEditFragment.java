@@ -723,23 +723,34 @@ public class ItemEditFragment extends Fragment implements View.OnClickListener, 
             // Retrieve the data points from JSON
             try {
                 // Description
-                map.put("description", jsonobject.getString("name"));
-
-                // Attributes
-                JSONObject jsonChildObject = (JSONObject)jsonobject.get("attributes");
-                Iterator iterator  = jsonChildObject.keys();
-                String key;
-                String attrs = "";
-
-                while(iterator.hasNext()){
-                    key = (String)iterator.next();
-
-                    attrs = attrs + "\n" + key + ": " + (jsonChildObject.get(key)).toString();
-
-                    System.out.println(key + " value: " + (jsonChildObject.get(key)).toString());
+                if (jsonobject.getString("name").compareToIgnoreCase("null") != 0) {
+                    // Description
+                    map.put("description", jsonobject.getString("name"));
+                } else {
+                    map.put("description", "");
                 }
 
-                map.put("notes", attrs);
+                // Attributes
+                if (jsonobject.get("attributes").toString().isEmpty()) {
+                    // Attributes
+                    JSONObject jsonChildObject = (JSONObject) jsonobject.get("attributes");
+
+                    Iterator iterator = jsonChildObject.keys();
+                    String key;
+                    String attrs = "";
+
+                    while (iterator.hasNext()) {
+                        key = (String) iterator.next();
+
+                        attrs = attrs + "\n" + key + ": " + (jsonChildObject.get(key)).toString();
+
+                        System.out.println(key + " value: " + (jsonChildObject.get(key)).toString());
+                    }
+
+                    map.put("notes", attrs);
+                } else {
+                    map.put("notes", "");
+                }
 
             } catch (JSONException e) {
                 Log.e("Error", e.getMessage());
