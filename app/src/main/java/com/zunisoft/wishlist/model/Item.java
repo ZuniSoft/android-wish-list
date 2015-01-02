@@ -62,6 +62,7 @@ public class Item extends ActiveRecord {
     public static final String COL_DESIRABILITY = "desirability";
     public static final String COL_BARCODE = "barcode";
     public static final String COL_NOTES = "notes";
+    public static final String COL_PRICE = "price";
 
     /** Database table */
     public static final String SQL_TABLE_NAME = "item";
@@ -79,14 +80,15 @@ public class Item extends ActiveRecord {
             + COL_CATEGORY + " text not null, "
             + COL_DESIRABILITY + " integer not null default 0, "
             + COL_BARCODE + " text null, "
-            + COL_NOTES + " text null"
+            + COL_NOTES + " text null, "
+            + COL_PRICE + " long null"
             + ");";
 
     /** Default select list */
     public static final String[] DEFAULT_SELECT_LIST = { COL_ROW_ID,
             COL_PHOTO_THUMBNAIL, COL_PHOTO_LARGE, COL_LOCATION, COL_DESCRIPTION,
             COL_DATE_CAPTURED, COL_DATE_PURCHASED, COL_CATEGORY, COL_DESIRABILITY,
-            COL_BARCODE, COL_NOTES };
+            COL_BARCODE, COL_NOTES, COL_PRICE };
 
     /** Minimum select list */
     public static final String[] MIN_SELECT_LIST = { COL_ROW_ID,
@@ -108,6 +110,7 @@ public class Item extends ActiveRecord {
     private int     desirability;
     private String  barcode;
     private String  notes;
+    private long    price;
 
     // Member variables
     private String dateDisplayPattern;
@@ -268,6 +271,7 @@ public class Item extends ActiveRecord {
                 setDesirability(cursor.getInt(cursor.getColumnIndex(COL_DESIRABILITY)));
                 setBarcode(cursor.getString(cursor.getColumnIndex(COL_BARCODE)));
                 setNotes(cursor.getString(cursor.getColumnIndex(COL_NOTES)));
+                setPrice(cursor.getLong(cursor.getColumnIndex(COL_PRICE)));
 
                 // Set the thumbnail photo
                 byte[] blob = cursor.getBlob(cursor
@@ -336,6 +340,7 @@ public class Item extends ActiveRecord {
             values.put(COL_DESIRABILITY, desirability);
             values.put(COL_BARCODE, barcode);
             values.put(COL_NOTES, notes);
+            values.put(COL_PRICE, price);
 
             // Set the thumbnail photo
             if (thumbnailPhoto != null) {
@@ -634,6 +639,25 @@ public class Item extends ActiveRecord {
      */
     public void setLargePhoto(Bitmap photo) {
         this.largePhoto = photo;
+    }
+
+    /**
+     * Gets the item's price.
+     *
+     * @return The item's price.
+     */
+    public long getPrice() {
+        return price;
+    }
+
+    /**
+     * Sets the item's price.
+     *
+     * @param price
+     *            The item's price.
+     */
+    public void setPrice(long price) {
+        this.price = price;
     }
 
 }

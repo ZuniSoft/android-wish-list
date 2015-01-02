@@ -33,6 +33,7 @@ import android.view.MenuItem;
 
 import com.zunisoft.common.concurrent.TaskListener;
 import com.zunisoft.common.db.DatabaseAdapter;
+import com.zunisoft.common.support.AndroidUtil;
 import com.zunisoft.wishlist.fragment.AboutFragment;
 import com.zunisoft.wishlist.fragment.ExternalStorageStatusFragment;
 import com.zunisoft.wishlist.fragment.ItemListFragment;
@@ -116,6 +117,22 @@ public class MainActivity extends ActionBarActivity implements TaskListener {
         if (pdialog != null && pdialog.isShowing()) {
             pdialog.dismiss();
         }
+    }
+
+    /**
+     * Perform any final cleanup before an activity is destroyed. This can happen either because the
+     * activity is finishing (someone called finish() on it, or because the system is temporarily
+     * destroying this instance of the activity to save space. You can distinguish between these two
+     * scenarios with the isFinishing() method.
+     */
+    @Override
+    protected void onDestroy() {
+        Log.d(TAG, "onDestroy()");
+
+        super.onDestroy();
+
+        // Clean up temp directory
+        AndroidUtil.purgeTempDir(this.getApplicationContext());
     }
 
     /**

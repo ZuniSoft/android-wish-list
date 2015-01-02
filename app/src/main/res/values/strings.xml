@@ -30,6 +30,9 @@
     <!-- Comma separator -->
     <string name="comma_string">, </string>
 
+    <!-- Currency Symbol -->
+    <string name="currency_string">$</string>
+
     <!-- Date formats -->
     <string name="date_display_format">MM/dd/yyyy</string>
     <string name="date_display_long_format">EEEE, MMMM d, yyyy</string>
@@ -39,6 +42,7 @@
     <string name="validation_required_field">Required field</string>
     <string name="validation_date">Invalid date format, use yyyy-mm-dd </string>
     <string name="validation_value_out_of_range">Value out of range</string>
+    <string name="validation_number">Value not a number</string>
 
     <!-- Common buttons -->
     <string name="add_button_label">Add</string>
@@ -95,5 +99,6 @@
     <string name="item_edit_desirability_label">Desirability</string>
     <string name="item_edit_barcode_label">Barcode/ISBN</string>
     <string name="item_edit_notes_label">Notes</string>
+    <string name="item_edit_price_label">Price</string>
     <string name="item_edit_share_content">From my wish list...</string>
 </resources>

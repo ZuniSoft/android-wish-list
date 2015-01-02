@@ -54,7 +54,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 	private static final String DATABASE_NAME = "wishlist.db";
 
 	// Database version
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 2;
 
 	// Member variables
 	private boolean isInitializing = false;
@@ -267,9 +267,9 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 		
 		// Apply upgrades
 		if (oldVersion == 1 && newVersion == 2) {
-			// Version 1 to 2 introduced some new feature
-			//String messageAlterSql = "alter table test add column new_column NULL";
-			//db.execSQL(messageAlterSql);
+			// Version 1 to 2 add price column
+			String alterSql = "ALTER TABLE item ADD COLUMN price long NULL";
+			db.execSQL(alterSql);
 		}
 	}
 

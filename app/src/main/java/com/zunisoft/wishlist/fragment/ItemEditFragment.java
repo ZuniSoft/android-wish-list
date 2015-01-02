@@ -23,6 +23,7 @@ import java.io.FileOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,7 +37,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.Canvas;
@@ -113,6 +113,7 @@ public class ItemEditFragment extends Fragment implements View.OnClickListener, 
     private RatingBar ratingDesirability;
     private EditText editBarcode;
     private EditText editNotes;
+    private EditText editPrice;
 
     // Database adapter
     private DatabaseAdapter dbAdapter;
@@ -199,6 +200,7 @@ public class ItemEditFragment extends Fragment implements View.OnClickListener, 
         ratingDesirability = (RatingBar)rootView.findViewById(R.id.item_edit_desirability);
         editBarcode = (EditText)rootView.findViewById(R.id.item_edit_barcode);
         editNotes = (EditText)rootView.findViewById(R.id.item_edit_notes);
+        editPrice = (EditText)rootView.findViewById(R.id.item_edit_price);
 
         // Setup date purchased button
         purchasedButton = (ImageButton)rootView.findViewById(R.id.item_edit_date_purchased_button);
@@ -241,6 +243,8 @@ public class ItemEditFragment extends Fragment implements View.OnClickListener, 
                 R.id.item_edit_barcode);
         fieldDataMap.put(Item.COL_NOTES,
                 R.id.item_edit_notes);
+        fieldDataMap.put(Item.COL_PRICE,
+                R.id.item_edit_price);
 
         // Get the item ID
         Bundle bundle = this.getArguments();
@@ -272,6 +276,11 @@ public class ItemEditFragment extends Fragment implements View.OnClickListener, 
             editBarcode.setText(item.getBarcode());
             editNotes.setText(item.getNotes());
 
+            // Set price (stored as long)
+            String currencySymbol = getString(R.string.currency_string);
+            BigDecimal currency = new BigDecimal(item.getPrice()).movePointLeft(2);
+            editPrice.setText(currencySymbol + currency.toString());
+
             // Set the photos
             if (savedInstanceState != null) {
                 imageLarge = (Bitmap) savedInstanceState
@@ -291,7 +300,6 @@ public class ItemEditFragment extends Fragment implements View.OnClickListener, 
             DateFormat dateDisplayFormat = new SimpleDateFormat(getString(
                     R.string.date_display_format));
             editDateAdded.setText(dateDisplayFormat.format(new Date()));
-
 
             // Set photos
             if (savedInstanceState != null) {
@@ -575,6 +583,16 @@ public class ItemEditFragment extends Fragment implements View.OnClickListener, 
         item.setDesirability((int)ratingDesirability.getRating());
         item.setBarcode(editBarcode.getText().toString());
         item.setNotes(editNotes.getText().toString());
+
+        // Price (stored as long)
+        String price = editPrice.getText().toString().trim();
+        price = price.replaceAll("\\$", "");
+        price = price.replaceAll("\\.", "");
+
+        if (price.compareToIgnoreCase("") == 0)
+            item.setPrice(0);
+        else
+            item.setPrice(Long.valueOf(price));
 
         // Photos
         Bitmap imageThumbnail = Bitmap.createBitmap(256, 256, imageLarge.getConfig());
