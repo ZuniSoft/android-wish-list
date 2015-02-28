@@ -735,7 +735,7 @@ public class ItemEditFragment extends Fragment implements View.OnClickListener, 
 
             // Retrieve JSON Objects from the given URL address
             jsonobject = JSONFunctions
-                    .getJSONfromURL("http://www.outpan.com/api/get-product.php?apikey=" + API_KEY
+                    .getJSONfromURL("https://www.outpan.com/api/get-product.php?apikey=" + API_KEY
                                     + "&barcode=" + code, JSONFunctions.METHOD_GET);
 
             // Retrieve the data points from JSON
